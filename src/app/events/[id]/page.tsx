@@ -1,9 +1,9 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Event {
   _id: string;
@@ -17,6 +17,12 @@ interface Event {
 }
 
 const EventDetailsPage = () => {
+  const router = useRouter();
+
+  const [joining, setJoining] = useState(false);
+  const [joinError, setJoinError] = useState("");
+  const [joinSuccess, setJoinSuccess] = useState("");
+
   const params = useParams<{ id: string }>();
   const eventId = params.id;
 
@@ -27,9 +33,7 @@ const EventDetailsPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:5000/events/${eventId}`
-        );
+        const response = await fetch(`http://localhost:5000/events/${eventId}`);
 
         if (!response.ok) {
           throw new Error("Failed to load event details.");
@@ -43,11 +47,7 @@ const EventDetailsPage = () => {
 
         setEvent(result.data);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong."
-        );
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -57,6 +57,55 @@ const EventDetailsPage = () => {
       fetchEvent();
     }
   }, [eventId]);
+
+  const handleJoinEvent = async () => {
+    setJoining(true);
+    setJoinError("");
+    setJoinSuccess("");
+
+    try {
+      // Get JWT token
+      const tokenResponse = await fetch(
+        "http://localhost:5000/api/auth/token",
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      );
+
+      const tokenResult = await tokenResponse.json();
+
+      if (!tokenResponse.ok || !tokenResult.token) {
+        router.push("/login");
+        return;
+      }
+
+      // Join event
+      const response = await fetch(
+        `http://localhost:5000/events/${eventId}/join`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${tokenResult.token}`,
+          },
+        },
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to join event.");
+      }
+
+      setJoinSuccess("You have successfully joined this event!");
+    } catch (err) {
+      setJoinError(
+        err instanceof Error ? err.message : "Something went wrong.",
+      );
+    } finally {
+      setJoining(false);
+    }
+  };
 
   const formatDate = (date: string) => {
     return new Date(`${date}T00:00:00`).toLocaleDateString("en-BD", {
@@ -99,9 +148,11 @@ const EventDetailsPage = () => {
         </Link>
 
         <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
-          <img
+          <Image
             src={event.thumbnail}
             alt={event.title}
+            width={1200}
+            height={600}
             className="h-72 w-full object-cover sm:h-96"
           />
 
@@ -114,9 +165,7 @@ const EventDetailsPage = () => {
               {event.title}
             </h1>
 
-            <p className="mt-6 leading-8 text-gray-600">
-              {event.description}
-            </p>
+            <p className="mt-6 leading-8 text-gray-600">{event.description}</p>
 
             <div className="mt-8 grid gap-5 rounded-xl bg-gray-50 p-6 sm:grid-cols-2">
               <div>
@@ -141,12 +190,27 @@ const EventDetailsPage = () => {
               </div>
             </div>
 
-            <Link
-              href="/login"
-              className="mt-8 inline-block rounded-lg bg-green-600 px-8 py-3 font-semibold text-white transition hover:bg-green-700"
-            >
-              Join Event
-            </Link>
+            <div className="mt-8 space-y-3">
+              {joinError && (
+                <p role="alert" className="text-sm text-red-600">
+                  {joinError}
+                </p>
+              )}
+
+              {joinSuccess && (
+                <p role="status" className="text-sm text-green-700">
+                  {joinSuccess}
+                </p>
+              )}
+
+              <button
+                onClick={handleJoinEvent}
+                disabled={joining}
+                className="rounded-lg bg-green-600 px-8 py-3 font-semibold text-white transition hover:bg-green-700 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {joining ? "Joining..." : "Join Event"}
+              </button>
+            </div>
           </div>
         </div>
       </div>

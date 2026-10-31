@@ -24,6 +24,7 @@ const CreateEventPage = () => {
     e: React.FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
+    const formElement = e.currentTarget;
 
     setError("");
     setSuccess("");
@@ -75,7 +76,7 @@ const CreateEventPage = () => {
 
       setSuccess("Event created successfully!");
 
-      e.currentTarget.reset();
+      formElement.reset();
 
       setTimeout(() => {
         router.push("/upcoming-events");
