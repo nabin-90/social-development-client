@@ -152,6 +152,12 @@ const ManageEventsPage = () => {
                   >
                     View Details →
                   </Link>
+                  <Link
+                    href={`/dashboard/manage-events/${event._id}/edit`}
+                    className="mt-3 inline-block rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+                  >
+                    Update Event
+                  </Link>
                 </div>
               </article>
             ))}
