@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import EventCardSkeleton from "../shared/EventCardSkeleton";
 
 interface Event {
   _id: string;
@@ -22,9 +22,7 @@ const RecentEventsSection = () => {
   useEffect(() => {
     const fetchRecentEvents = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:5000/events?limit=6"
-        );
+        const response = await fetch("http://localhost:5000/events?limit=6");
 
         if (!response.ok) {
           throw new Error("Failed to fetch events.");
@@ -34,13 +32,11 @@ const RecentEventsSection = () => {
 
         const eventList = Array.isArray(result)
           ? result
-          : result.events ?? result.data ?? [];
+          : (result.events ?? result.data ?? []);
 
         setEvents(eventList);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Something went wrong."
-        );
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -61,7 +57,6 @@ const RecentEventsSection = () => {
   return (
     <section className="bg-gray-50 px-4 py-20 sm:py-24">
       <div className="mx-auto max-w-7xl">
-
         {/* Section Heading */}
         <div className="mb-12 text-center">
           <span className="inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
@@ -73,23 +68,23 @@ const RecentEventsSection = () => {
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
-            Discover the latest community events and find opportunities
-            to contribute to a better society.
+            Discover the latest community events and find opportunities to
+            contribute to a better society.
           </p>
         </div>
 
-        {/* Loading State */}
+        {/* Loading Skeletons */}
         {loading && (
-          <p className="py-12 text-center text-gray-500">
-            Loading upcoming events...
-          </p>
+          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <EventCardSkeleton key={index} />
+            ))}
+          </div>
         )}
 
         {/* Error State */}
         {!loading && error && (
-          <p className="py-12 text-center text-red-600">
-            {error}
-          </p>
+          <p className="py-12 text-center text-red-600">{error}</p>
         )}
 
         {/* Empty State */}
@@ -156,7 +151,6 @@ const RecentEventsSection = () => {
             View All Events
           </Link>
         </div>
-
       </div>
     </section>
   );

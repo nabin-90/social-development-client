@@ -1,9 +1,9 @@
-
 "use client";
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
+import Image from "next/image";
 
 const Navbar = () => {
   const router = useRouter();
@@ -56,18 +56,25 @@ const Navbar = () => {
                 type="button"
                 className="flex items-center gap-2 rounded-full border border-gray-200 p-1 pr-3 hover:bg-gray-50"
               >
-                <img
+                <Image
                   src={user.image || "https://i.pravatar.cc/100"}
                   alt={user.name}
+                  width={36}
+                  height={36}
                   className="h-9 w-9 rounded-full object-cover"
                 />
 
-                <span className="font-medium text-gray-700">
-                  {user.name}
-                </span>
+                <span className="font-medium text-gray-700">{user.name}</span>
               </button>
 
               <div className="invisible absolute right-0 top-full mt-2 w-48 rounded-lg border bg-white py-2 opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+                <Link
+                  href="/dashboard/profile"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"
+                >
+                  Profile
+                </Link>
+
                 <Link
                   href="/dashboard/create-event"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-green-50"

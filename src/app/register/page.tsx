@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -14,8 +13,32 @@ const RegisterPage = () => {
   const [photoURL, setPhotoURL] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState<"google" | "github" | "">(
+    "",
+  );
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+  const handleSocialLogin = async (provider: "google" | "github") => {
+    setError("");
+    setSuccess("");
+    setSocialLoading(provider);
+
+    try {
+      const { error } = await authClient.signIn.social({
+        provider,
+        callbackURL: "http://localhost:3000/",
+      });
+
+      if (error) {
+        setError(error.message || `${provider} login failed.`);
+        setSocialLoading("");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+      setSocialLoading("");
+    }
+  };
 
   const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -73,7 +96,10 @@ const RegisterPage = () => {
 
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
-            <label htmlFor="name" className="mb-2 block font-medium text-gray-700">
+            <label
+              htmlFor="name"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Full Name
             </label>
             <input
@@ -88,7 +114,10 @@ const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="email" className="mb-2 block font-medium text-gray-700">
+            <label
+              htmlFor="email"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Email Address
             </label>
             <input
@@ -103,7 +132,10 @@ const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="photoURL" className="mb-2 block font-medium text-gray-700">
+            <label
+              htmlFor="photoURL"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Profile Photo URL
             </label>
             <input
@@ -118,7 +150,10 @@ const RegisterPage = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="mb-2 block font-medium text-gray-700">
+            <label
+              htmlFor="password"
+              className="mb-2 block font-medium text-gray-700"
+            >
               Password
             </label>
             <input
@@ -156,6 +191,39 @@ const RegisterPage = () => {
             {loading ? "Creating Account..." : "Register"}
           </button>
         </form>
+
+        <div className="mt-6">
+          <div className="relative mb-4">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="bg-white px-3 text-sm text-gray-500">
+                Or continue with
+              </span>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => handleSocialLogin("google")}
+              disabled={!!socialLoading}
+              className="rounded-lg border border-gray-300 px-4 py-3 font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-60"
+            >
+              {socialLoading === "google" ? "Connecting..." : "Google"}
+            </button>
+
+            <button
+              type="button"
+              onClick={() => handleSocialLogin("github")}
+              disabled={!!socialLoading}
+              className="rounded-lg border border-gray-300 px-4 py-3 font-medium text-gray-700 transition hover:bg-gray-50 disabled:opacity-60"
+            >
+              {socialLoading === "github" ? "Connecting..." : "GitHub"}
+            </button>
+          </div>
+        </div>
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Already have an account?{" "}

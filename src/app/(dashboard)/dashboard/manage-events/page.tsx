@@ -1,9 +1,9 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
 
 interface Event {
   _id: string;
@@ -125,8 +125,24 @@ const ManageEventsPage = () => {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center">
-        <p className="text-gray-600">Loading your events...</p>
+      <main className="min-h-screen bg-gray-50 px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          {/* Page Heading Skeleton */}
+          <div className="mb-8">
+            <div className="mb-3 h-4 w-36 animate-pulse rounded bg-gray-200" />
+
+            <div className="h-9 w-56 animate-pulse rounded bg-gray-200" />
+
+            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200" />
+          </div>
+
+          {/* Event Cards Skeleton */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <EventCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
       </main>
     );
   }
@@ -157,13 +173,19 @@ const ManageEventsPage = () => {
         </div>
 
         {error && (
-          <p role="alert" className="mb-5 rounded-lg bg-red-50 p-3 text-sm text-red-600">
+          <p
+            role="alert"
+            className="mb-5 rounded-lg bg-red-50 p-3 text-sm text-red-600"
+          >
             {error}
           </p>
         )}
 
         {success && (
-          <p role="status" className="mb-5 rounded-lg bg-green-50 p-3 text-sm text-green-700">
+          <p
+            role="status"
+            className="mb-5 rounded-lg bg-green-50 p-3 text-sm text-green-700"
+          >
             {success}
           </p>
         )}
@@ -260,8 +282,8 @@ const ManageEventsPage = () => {
 
             <p className="mt-3 text-gray-600">
               Are you sure you want to delete{" "}
-              <span className="font-semibold">{deleteTarget.title}</span>?
-              This action cannot be undone.
+              <span className="font-semibold">{deleteTarget.title}</span>? This
+              action cannot be undone.
             </p>
 
             <div className="mt-6 flex justify-end gap-3">

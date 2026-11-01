@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
 
 interface JoinedEvent {
   _id: string;
@@ -28,7 +30,7 @@ const JoinedEventsPage = () => {
           {
             method: "GET",
             credentials: "include",
-          }
+          },
         );
 
         const tokenResult = await tokenResponse.json();
@@ -38,30 +40,21 @@ const JoinedEventsPage = () => {
         }
 
         // Fetch joined events
-        const response = await fetch(
-          "http://localhost:5000/joined-events",
-          {
-            headers: {
-              Authorization: `Bearer ${tokenResult.token}`,
-            },
-          }
-        );
+        const response = await fetch("http://localhost:5000/joined-events", {
+          headers: {
+            Authorization: `Bearer ${tokenResult.token}`,
+          },
+        });
 
         const result = await response.json();
 
         if (!response.ok) {
-          throw new Error(
-            result.message || "Failed to load joined events."
-          );
+          throw new Error(result.message || "Failed to load joined events.");
         }
 
         setEvents(result.data ?? []);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong."
-        );
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -80,8 +73,20 @@ const JoinedEventsPage = () => {
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center">
-        <p className="text-gray-600">Loading your joined events...</p>
+      <main className="min-h-screen bg-gray-50 px-4 py-12">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8">
+            <div className="mb-3 h-4 w-32 animate-pulse rounded bg-gray-200" />
+            <div className="h-9 w-56 animate-pulse rounded bg-gray-200" />
+            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200" />
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <EventCardSkeleton key={index} />
+            ))}
+          </div>
+        </div>
       </main>
     );
   }
@@ -100,9 +105,7 @@ const JoinedEventsPage = () => {
     <main className="min-h-screen bg-gray-50 px-4 py-12">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
-          <p className="font-semibold text-green-600">
-            YOUR ACTIVITIES
-          </p>
+          <p className="font-semibold text-green-600">YOUR ACTIVITIES</p>
 
           <h1 className="mt-2 text-3xl font-bold text-gray-900">
             Joined Events
@@ -137,9 +140,11 @@ const JoinedEventsPage = () => {
                 key={event._id}
                 className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm"
               >
-                <img
+                <Image
                   src={event.thumbnail}
                   alt={event.title}
+                  width={400}
+                  height={224}
                   className="h-52 w-full object-cover"
                 />
 

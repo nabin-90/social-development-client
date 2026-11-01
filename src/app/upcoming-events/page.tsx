@@ -1,8 +1,9 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
 
 interface Event {
   _id: string;
@@ -31,11 +32,7 @@ const UpcomingEventsPage = () => {
         const result = await response.json();
         setEvents(result.data ?? []);
       } catch (err) {
-        setError(
-          err instanceof Error
-            ? err.message
-            : "Something went wrong."
-        );
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -56,30 +53,28 @@ const UpcomingEventsPage = () => {
     <main className="min-h-screen bg-gray-50 px-4 py-16">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-semibold text-green-600">
-            MAKE A DIFFERENCE
-          </p>
+          <p className="mb-3 font-semibold text-green-600">MAKE A DIFFERENCE</p>
 
           <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
             Upcoming Community Events
           </h1>
 
           <p className="mx-auto mt-4 max-w-2xl text-gray-600">
-            Discover meaningful activities and join hands to create
-            positive changes in your community.
+            Discover meaningful activities and join hands to create positive
+            changes in your community.
           </p>
         </div>
 
         {loading && (
-          <p className="py-12 text-center text-gray-600">
-            Loading upcoming events...
-          </p>
+          <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+              <EventCardSkeleton key={index} />
+            ))}
+          </div>
         )}
 
         {!loading && error && (
-          <p className="py-12 text-center text-red-600">
-            {error}
-          </p>
+          <p className="py-12 text-center text-red-600">{error}</p>
         )}
 
         {!loading && !error && events.length === 0 && (
@@ -96,9 +91,11 @@ const UpcomingEventsPage = () => {
                 className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
               >
                 <div className="h-56 overflow-hidden">
-                  <img
+                  <Image
                     src={event.thumbnail}
                     alt={event.title}
+                    width={400}
+                    height={224}
                     className="h-full w-full object-cover transition duration-500 hover:scale-105"
                   />
                 </div>
