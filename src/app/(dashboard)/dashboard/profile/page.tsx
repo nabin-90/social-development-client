@@ -55,10 +55,18 @@ const ProfilePage = () => {
     }
   };
 
+  const inputClass =
+    "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:ring-green-900";
+
+  const labelClass =
+    "mb-2 block font-medium text-gray-700 dark:text-gray-300";
+
   if (isPending) {
     return (
-      <main className="flex min-h-[60vh] items-center justify-center">
-        <p className="text-gray-600">Loading profile...</p>
+      <main className="flex min-h-[60vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <p className="text-gray-600 dark:text-gray-400">
+          Loading profile...
+        </p>
       </main>
     );
   }
@@ -68,13 +76,14 @@ const ProfilePage = () => {
   }
 
   return (
-    <main className="min-h-[70vh] bg-gray-50 px-4 py-12">
-      <div className="mx-auto max-w-2xl rounded-2xl bg-white p-6 shadow-sm sm:p-8">
+    <main className="min-h-[70vh] bg-gray-50 px-4 py-12 dark:bg-gray-950">
+      <div className="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
             My Profile
           </h1>
-          <p className="mt-2 text-gray-600">
+
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Manage your account information.
           </p>
         </div>
@@ -85,14 +94,15 @@ const ProfilePage = () => {
             alt={name || "Profile"}
             width={80}
             height={80}
-            className="h-20 w-20 rounded-full border object-cover"
+            className="h-20 w-20 rounded-full border border-gray-200 object-cover dark:border-gray-700"
           />
 
           <div>
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
               {name}
             </h2>
-            <p className="text-sm text-gray-500">
+
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {session.user.email}
             </p>
           </div>
@@ -100,10 +110,7 @@ const ProfilePage = () => {
 
         <form onSubmit={handleUpdateProfile} className="space-y-5">
           <div>
-            <label
-              htmlFor="name"
-              className="mb-2 block font-medium text-gray-700"
-            >
+            <label htmlFor="name" className={labelClass}>
               Full Name
             </label>
 
@@ -113,15 +120,12 @@ const ProfilePage = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block font-medium text-gray-700"
-            >
+            <label htmlFor="email" className={labelClass}>
               Email Address
             </label>
 
@@ -130,19 +134,16 @@ const ProfilePage = () => {
               type="email"
               value={session.user.email}
               readOnly
-              className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500"
+              className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
             />
 
-            <p className="mt-1 text-xs text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
               Email address cannot be changed here.
             </p>
           </div>
 
           <div>
-            <label
-              htmlFor="image"
-              className="mb-2 block font-medium text-gray-700"
-            >
+            <label htmlFor="image" className={labelClass}>
               Profile Photo URL
             </label>
 
@@ -152,18 +153,24 @@ const ProfilePage = () => {
               value={image}
               onChange={(e) => setImage(e.target.value)}
               placeholder="https://example.com/photo.jpg"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400"
+            >
               {error}
             </p>
           )}
 
           {success && (
-            <p role="status" className="text-sm text-green-600">
+            <p
+              role="status"
+              className="rounded-lg bg-green-50 p-3 text-sm text-green-600 dark:bg-green-950/40 dark:text-green-400"
+            >
               {success}
             </p>
           )}

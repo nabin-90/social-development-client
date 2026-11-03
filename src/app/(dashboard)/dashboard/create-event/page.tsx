@@ -20,9 +20,7 @@ const CreateEventPage = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleCreateEvent = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleCreateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formElement = e.currentTarget;
 
@@ -49,7 +47,7 @@ const CreateEventPage = () => {
         {
           method: "GET",
           credentials: "include",
-        }
+        },
       );
 
       const tokenResult = await tokenResponse.json();
@@ -83,39 +81,39 @@ const CreateEventPage = () => {
         router.refresh();
       }, 1500);
     } catch (err) {
-      setError(
-        err instanceof Error
-          ? err.message
-          : "Something went wrong."
-      );
+      setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setLoading(false);
     }
   };
 
+  const labelClass =
+    "mb-2 block font-medium text-gray-700 dark:text-gray-300";
+
+  const inputClass =
+    "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:ring-green-900";
+
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-12">
+    <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
       <div className="mx-auto max-w-3xl">
         <div className="mb-8">
-          <p className="font-semibold text-green-600">
-            CREATE AN EVENT
-          </p>
+          <p className="font-semibold text-green-600">CREATE AN EVENT</p>
 
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">
+          <h1 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
             Organize a Community Event
           </h1>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-600 dark:text-gray-400">
             Bring people together and make a positive difference.
           </p>
         </div>
 
         <form
           onSubmit={handleCreateEvent}
-          className="space-y-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8"
+          className="space-y-6 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900"
         >
           <div>
-            <label htmlFor="title" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="title" className={labelClass}>
               Event Title
             </label>
 
@@ -126,12 +124,12 @@ const CreateEventPage = () => {
               minLength={3}
               placeholder="Enter event title"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label htmlFor="description" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="description" className={labelClass}>
               Description
             </label>
 
@@ -142,12 +140,12 @@ const CreateEventPage = () => {
               minLength={10}
               placeholder="Describe your event..."
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label htmlFor="type" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="type" className={labelClass}>
               Event Type
             </label>
 
@@ -156,7 +154,7 @@ const CreateEventPage = () => {
               name="type"
               required
               defaultValue=""
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 outline-none focus:border-green-600"
+              className={`${inputClass} dark:[color-scheme:dark]`}
             >
               <option value="" disabled>
                 Select event type
@@ -171,7 +169,7 @@ const CreateEventPage = () => {
           </div>
 
           <div>
-            <label htmlFor="thumbnail" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="thumbnail" className={labelClass}>
               Thumbnail Image URL
             </label>
 
@@ -181,12 +179,12 @@ const CreateEventPage = () => {
               type="url"
               placeholder="https://example.com/image.jpg"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label htmlFor="location" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="location" className={labelClass}>
               Location
             </label>
 
@@ -196,12 +194,12 @@ const CreateEventPage = () => {
               type="text"
               placeholder="Enter event location"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label htmlFor="eventDate" className="mb-2 block font-medium text-gray-700">
+            <label htmlFor="eventDate" className={labelClass}>
               Event Date
             </label>
 
@@ -213,18 +211,24 @@ const CreateEventPage = () => {
                 timeZone: "Asia/Dhaka",
               })}
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600"
+              className={`${inputClass} dark:[color-scheme:dark]`}
             />
           </div>
 
           {error && (
-            <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400"
+            >
               {error}
             </p>
           )}
 
           {success && (
-            <p role="status" className="rounded-lg bg-green-50 p-3 text-sm text-green-700">
+            <p
+              role="status"
+              className="rounded-lg bg-green-50 p-3 text-sm text-green-700 dark:bg-green-950/40 dark:text-green-400"
+            >
               {success}
             </p>
           )}

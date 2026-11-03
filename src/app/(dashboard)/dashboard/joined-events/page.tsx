@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
+import EventCard, { type EventCardData } from "@/components/shared/EventCard";
 
 interface JoinedEvent {
   _id: string;
@@ -17,14 +18,13 @@ interface JoinedEvent {
 }
 
 const JoinedEventsPage = () => {
-  const [events, setEvents] = useState<JoinedEvent[]>([]);
+  const [events, setEvents] = useState<EventCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchJoinedEvents = async () => {
       try {
-        // Get JWT token
         const tokenResponse = await fetch(
           "http://localhost:5000/api/auth/token",
           {
@@ -39,7 +39,6 @@ const JoinedEventsPage = () => {
           throw new Error("Please login to see your joined events.");
         }
 
-        // Fetch joined events
         const response = await fetch("http://localhost:5000/joined-events", {
           headers: {
             Authorization: `Bearer ${tokenResult.token}`,
@@ -63,22 +62,14 @@ const JoinedEventsPage = () => {
     fetchJoinedEvents();
   }, []);
 
-  const formatDate = (date: string) => {
-    return new Date(`${date}T00:00:00`).toLocaleDateString("en-BD", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
-
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 px-4 py-12">
+      <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8">
-            <div className="mb-3 h-4 w-32 animate-pulse rounded bg-gray-200" />
-            <div className="h-9 w-56 animate-pulse rounded bg-gray-200" />
-            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200" />
+            <div className="mb-3 h-4 w-32 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+            <div className="h-9 w-56 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -93,8 +84,8 @@ const JoinedEventsPage = () => {
 
   if (error) {
     return (
-      <main className="flex min-h-screen items-center justify-center px-4">
-        <p role="alert" className="text-red-600">
+      <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-950">
+        <p role="alert" className="text-red-600 dark:text-red-400">
           {error}
         </p>
       </main>
@@ -102,27 +93,27 @@ const JoinedEventsPage = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-12">
+    <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <p className="font-semibold text-green-600">YOUR ACTIVITIES</p>
 
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">
+          <h1 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
             Joined Events
           </h1>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-600 dark:text-gray-400">
             Keep track of the community events you have joined.
           </p>
         </div>
 
         {events.length === 0 ? (
-          <div className="rounded-xl border bg-white p-10 text-center">
-            <h2 className="text-xl font-semibold text-gray-900">
+          <div className="rounded-xl border border-gray-200 bg-white p-10 text-center dark:border-gray-800 dark:bg-gray-900">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               No joined events yet
             </h2>
 
-            <p className="mt-2 text-gray-600">
+            <p className="mt-2 text-gray-600 dark:text-gray-400">
               Explore upcoming events and join a community activity.
             </p>
 
@@ -136,43 +127,7 @@ const JoinedEventsPage = () => {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
-              <article
-                key={event._id}
-                className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm"
-              >
-                <Image
-                  src={event.thumbnail}
-                  alt={event.title}
-                  width={400}
-                  height={224}
-                  className="h-52 w-full object-cover"
-                />
-
-                <div className="p-5">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
-                    {event.type}
-                  </span>
-
-                  <h2 className="mt-4 text-xl font-bold text-gray-900">
-                    {event.title}
-                  </h2>
-
-                  <p className="mt-2 text-sm text-gray-600">
-                    📅 {formatDate(event.eventDate)}
-                  </p>
-
-                  <p className="mt-1 text-sm text-gray-600">
-                    📍 {event.location}
-                  </p>
-
-                  <Link
-                    href={`/events/${event._id}`}
-                    className="mt-5 inline-block font-semibold text-green-600 hover:underline"
-                  >
-                    View Details →
-                  </Link>
-                </div>
-              </article>
+              <EventCard key={event._id} event={event} />
             ))}
           </div>
         )}

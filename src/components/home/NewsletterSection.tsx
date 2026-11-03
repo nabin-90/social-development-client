@@ -1,8 +1,8 @@
 
 const NewsletterSection = () => {
   return (
-    <section className="bg-green-50 px-4 py-20 sm:py-24">
-      <div className="mx-auto max-w-4xl rounded-3xl bg-green-700 px-6 py-12 text-center shadow-lg sm:px-12 sm:py-16">
+    <section className="bg-green-50 px-4 py-14 dark:bg-gray-950 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-4xl rounded-3xl bg-green-700 px-6 py-12 text-center shadow-lg dark:bg-green-900 sm:px-12 sm:py-16">
         <p className="mb-3 font-semibold tracking-wider text-green-200">
           STAY CONNECTED
         </p>

@@ -2,25 +2,18 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
+import EventCard, { type EventCardData } from "@/components/shared/EventCard";
 
-interface Event {
-  _id: string;
-  title: string;
-  description: string;
-  type: string;
-  thumbnail: string;
-  location: string;
-  eventDate: string;
+type Event = EventCardData & {
   creatorEmail: string;
-}
+};
 
 const ManageEventsPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [deleteTarget, setDeleteTarget] = useState<Event | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<EventCardData | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [success, setSuccess] = useState("");
 
@@ -63,14 +56,6 @@ const ManageEventsPage = () => {
 
     fetchMyEvents();
   }, []);
-
-  const formatDate = (date: string) => {
-    return new Date(`${date}T00:00:00`).toLocaleDateString("en-BD", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
 
   const handleDeleteEvent = async () => {
     if (!deleteTarget) return;
@@ -125,18 +110,14 @@ const ManageEventsPage = () => {
 
   if (loading) {
     return (
-      <main className="min-h-screen bg-gray-50 px-4 py-12">
+      <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
         <div className="mx-auto max-w-7xl">
-          {/* Page Heading Skeleton */}
           <div className="mb-8">
-            <div className="mb-3 h-4 w-36 animate-pulse rounded bg-gray-200" />
-
-            <div className="h-9 w-56 animate-pulse rounded bg-gray-200" />
-
-            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200" />
+            <div className="mb-3 h-4 w-36 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+            <div className="h-9 w-56 animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
+            <div className="mt-3 h-4 w-80 max-w-full animate-pulse rounded bg-gray-200 dark:bg-gray-800" />
           </div>
 
-          {/* Event Cards Skeleton */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, index) => (
               <EventCardSkeleton key={index} />
@@ -149,8 +130,8 @@ const ManageEventsPage = () => {
 
   if (error && events.length === 0) {
     return (
-      <main className="flex min-h-screen items-center justify-center px-4">
-        <p role="alert" className="text-red-600">
+      <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4 dark:bg-gray-950">
+        <p role="alert" className="text-red-600 dark:text-red-400">
           {error}
         </p>
       </main>
@@ -158,16 +139,16 @@ const ManageEventsPage = () => {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-12">
+    <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl">
         <div className="mb-8">
           <p className="font-semibold text-green-600">EVENT MANAGEMENT</p>
 
-          <h1 className="mt-2 text-3xl font-bold text-gray-900">
+          <h1 className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
             Manage Events
           </h1>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-600 dark:text-gray-400">
             View and manage the community events you created.
           </p>
         </div>
@@ -175,7 +156,7 @@ const ManageEventsPage = () => {
         {error && (
           <p
             role="alert"
-            className="mb-5 rounded-lg bg-red-50 p-3 text-sm text-red-600"
+            className="mb-5 rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400"
           >
             {error}
           </p>
@@ -184,15 +165,15 @@ const ManageEventsPage = () => {
         {success && (
           <p
             role="status"
-            className="mb-5 rounded-lg bg-green-50 p-3 text-sm text-green-700"
+            className="mb-5 rounded-lg bg-green-50 p-3 text-sm text-green-700 dark:bg-green-950/40 dark:text-green-400"
           >
             {success}
           </p>
         )}
 
         {events.length === 0 ? (
-          <div className="rounded-xl border bg-white p-10 text-center">
-            <h2 className="text-xl font-semibold text-gray-900">
+          <div className="rounded-xl border border-gray-200 bg-white p-10 text-center dark:border-gray-800 dark:bg-gray-900">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               You haven&apos;t created any events yet
             </h2>
 
@@ -206,60 +187,12 @@ const ManageEventsPage = () => {
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
-              <article
+              <EventCard
                 key={event._id}
-                className="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm"
-              >
-                <Image
-                  src={event.thumbnail}
-                  alt={event.title}
-                  width={1200}
-                  height={600}
-                  className="h-52 w-full object-cover"
-                />
-
-                <div className="p-5">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
-                    {event.type}
-                  </span>
-
-                  <h2 className="mt-4 text-xl font-bold text-gray-900">
-                    {event.title}
-                  </h2>
-
-                  <p className="mt-2 text-sm text-gray-600">
-                    📅 {formatDate(event.eventDate)}
-                  </p>
-
-                  <p className="mt-1 text-sm text-gray-600">
-                    📍 {event.location}
-                  </p>
-
-                  <div className="mt-5 flex flex-wrap items-center gap-3">
-                    <Link
-                      href={`/events/${event._id}`}
-                      className="font-semibold text-green-600 hover:underline"
-                    >
-                      View Details →
-                    </Link>
-
-                    <Link
-                      href={`/dashboard/manage-events/${event._id}/edit`}
-                      className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
-                    >
-                      Update Event
-                    </Link>
-
-                    <button
-                      type="button"
-                      onClick={() => setDeleteTarget(event)}
-                      className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-                    >
-                      Delete Event
-                    </button>
-                  </div>
-                </div>
-              </article>
+                event={event}
+                updateHref={`/dashboard/manage-events/${event._id}/edit`}
+                onDelete={(event) => setDeleteTarget(event)}
+              />
             ))}
           </div>
         )}
@@ -271,27 +204,29 @@ const ManageEventsPage = () => {
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-dialog-title"
-            className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl"
+            className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-xl dark:border-gray-700 dark:bg-gray-900"
           >
             <h2
               id="delete-dialog-title"
-              className="text-xl font-bold text-gray-900"
+              className="text-xl font-bold text-gray-900 dark:text-white"
             >
               Delete this event?
             </h2>
 
-            <p className="mt-3 text-gray-600">
+            <p className="mt-3 text-gray-600 dark:text-gray-400">
               Are you sure you want to delete{" "}
-              <span className="font-semibold">{deleteTarget.title}</span>? This
-              action cannot be undone.
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {deleteTarget.title}
+              </span>
+              ? This action cannot be undone.
             </p>
 
-            <div className="mt-6 flex justify-end gap-3">
+            <div className="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
               <button
                 type="button"
                 disabled={deleting}
                 onClick={() => setDeleteTarget(null)}
-                className="rounded-lg border border-gray-300 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-100 disabled:opacity-60"
+                className="rounded-lg border border-gray-300 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-100 disabled:opacity-60 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800"
               >
                 Cancel
               </button>

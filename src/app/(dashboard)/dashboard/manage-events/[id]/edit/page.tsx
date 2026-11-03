@@ -154,7 +154,7 @@ const EditEventPage = () => {
   if (!event) return null;
 
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-12">
+    <main className="min-h-screen bg-gray-50 px-4 py-12 dark:bg-gray-950">
       <div className="mx-auto max-w-3xl">
         <p className="font-semibold text-green-600">UPDATE EVENT</p>
 
@@ -168,7 +168,7 @@ const EditEventPage = () => {
 
         <form
           onSubmit={handleUpdateEvent}
-          className="mt-8 space-y-6 rounded-2xl border bg-white p-6 shadow-sm sm:p-8"
+          className="mt-8 space-y-6 rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900"
         >
           <div>
             <label
@@ -185,7 +185,7 @@ const EditEventPage = () => {
               defaultValue={event.title}
               minLength={3}
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:focus:border-green-500 dark:focus:ring-green-900"
             />
           </div>
 
@@ -221,7 +221,7 @@ const EditEventPage = () => {
               name="type"
               defaultValue={event.type}
               required
-              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3"
+              className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:[color-scheme:dark]"
             >
               {EVENT_TYPES.map((type) => (
                 <option key={type} value={type}>

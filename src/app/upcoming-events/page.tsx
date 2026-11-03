@@ -1,22 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import EventCardSkeleton from "@/components/shared/EventCardSkeleton";
-
-interface Event {
-  _id: string;
-  title: string;
-  description: string;
-  type: string;
-  thumbnail: string;
-  location: string;
-  eventDate: string;
-}
+import EventCard, { type EventCardData } from "@/components/shared/EventCard";
 
 const UpcomingEventsPage = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -41,25 +30,19 @@ const UpcomingEventsPage = () => {
     fetchEvents();
   }, []);
 
-  const formatDate = (date: string) => {
-    return new Date(`${date}T00:00:00`).toLocaleDateString("en-BD", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-  };
-
   return (
-    <main className="min-h-screen bg-gray-50 px-4 py-16">
+    <main className="min-h-screen bg-gray-50 px-4 py-16 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-semibold text-green-600">MAKE A DIFFERENCE</p>
+          <p className="mb-3 font-semibold text-green-600 dark:text-green-400">
+            MAKE A DIFFERENCE
+          </p>
 
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
             Upcoming Community Events
           </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+          <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-400">
             Discover meaningful activities and join hands to create positive
             changes in your community.
           </p>
@@ -74,11 +57,13 @@ const UpcomingEventsPage = () => {
         )}
 
         {!loading && error && (
-          <p className="py-12 text-center text-red-600">{error}</p>
+          <p className="py-12 text-center text-red-600 dark:text-red-400">
+            {error}
+          </p>
         )}
 
         {!loading && !error && events.length === 0 && (
-          <p className="py-12 text-center text-gray-600">
+          <p className="py-12 text-center text-gray-600 dark:text-gray-400">
             No upcoming events available right now.
           </p>
         )}
@@ -86,46 +71,7 @@ const UpcomingEventsPage = () => {
         {!loading && !error && events.length > 0 && (
           <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
-              <article
-                key={event._id}
-                className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              >
-                <div className="h-56 overflow-hidden">
-                  <Image
-                    src={event.thumbnail}
-                    alt={event.title}
-                    width={400}
-                    height={224}
-                    className="h-full w-full object-cover transition duration-500 hover:scale-105"
-                  />
-                </div>
-
-                <div className="p-6">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-700">
-                    {event.type}
-                  </span>
-
-                  <h2 className="mt-4 text-xl font-bold text-gray-900">
-                    {event.title}
-                  </h2>
-
-                  <p className="mt-3 line-clamp-2 text-sm text-gray-600">
-                    {event.description}
-                  </p>
-
-                  <div className="mt-5 space-y-2 text-sm text-gray-500">
-                    <p>📅 {formatDate(event.eventDate)}</p>
-                    <p>📍 {event.location}</p>
-                  </div>
-
-                  <Link
-                    href={`/events/${event._id}`}
-                    className="mt-6 block rounded-lg bg-green-600 px-4 py-3 text-center font-semibold text-white transition hover:bg-green-700"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </article>
+              <EventCard key={event._id} event={event} />
             ))}
           </div>
         )}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import EventCardSkeleton from "../shared/EventCardSkeleton";
+import EventCard, { type EventCardData } from "../shared/EventCard";
 
 interface Event {
   _id: string;
@@ -15,7 +16,7 @@ interface Event {
 }
 
 const RecentEventsSection = () => {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<EventCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -55,19 +56,19 @@ const RecentEventsSection = () => {
   };
 
   return (
-    <section className="bg-gray-50 px-4 py-20 sm:py-24">
+    <section className="bg-gray-50 px-4 py-14 dark:bg-gray-950 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl">
         {/* Section Heading */}
         <div className="mb-12 text-center">
-          <span className="inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700">
+          <span className="inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900/50 dark:text-green-300">
             Make a Difference
           </span>
 
-          <h2 className="mt-5 text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="mt-5 text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
             Recent Upcoming Events
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600">
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-gray-600 dark:text-gray-300">
             Discover the latest community events and find opportunities to
             contribute to a better society.
           </p>
@@ -84,12 +85,14 @@ const RecentEventsSection = () => {
 
         {/* Error State */}
         {!loading && error && (
-          <p className="py-12 text-center text-red-600">{error}</p>
+          <p className="py-12 text-center text-red-600 dark:text-red-400">
+            {error}
+          </p>
         )}
 
         {/* Empty State */}
         {!loading && !error && events.length === 0 && (
-          <p className="py-12 text-center text-gray-500">
+          <p className="py-12 text-center text-gray-500 dark:text-gray-400">
             No upcoming events available right now.
           </p>
         )}
@@ -98,46 +101,7 @@ const RecentEventsSection = () => {
         {!loading && !error && events.length > 0 && (
           <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
             {events.map((event) => (
-              <article
-                key={event._id}
-                className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-              >
-                {/* Event Thumbnail */}
-                <div
-                  className="h-52 bg-gray-200 bg-cover bg-center"
-                  style={{
-                    backgroundImage: `url("${event.thumbnail}")`,
-                  }}
-                  role="img"
-                  aria-label={event.title}
-                />
-
-                <div className="p-6">
-                  <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
-                    {event.type}
-                  </span>
-
-                  <h3 className="mt-4 text-xl font-bold text-gray-900">
-                    {event.title}
-                  </h3>
-
-                  <p className="mt-2 line-clamp-2 text-sm leading-6 text-gray-600">
-                    {event.description}
-                  </p>
-
-                  <div className="mt-5 space-y-2 border-t pt-4 text-sm text-gray-500">
-                    <p>📅 {formatDate(event.eventDate)}</p>
-                    <p>📍 {event.location}</p>
-                  </div>
-
-                  <Link
-                    href={`/events/${event._id}`}
-                    className="mt-5 inline-flex font-semibold text-green-700 transition hover:text-green-900"
-                  >
-                    View Details →
-                  </Link>
-                </div>
-              </article>
+              <EventCard key={event._id} event={event} />
             ))}
           </div>
         )}

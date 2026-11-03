@@ -1,3 +1,4 @@
+import Image from "next/image";
 
 const galleryImages = [
   {
@@ -40,18 +41,18 @@ const galleryImages = [
 
 const GallerySection = () => {
   return (
-    <section className="bg-white px-4 py-20 sm:py-24">
+    <section className="bg-white px-4 py-14 dark:bg-gray-950 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 text-center">
-          <p className="mb-3 font-semibold text-green-600">
+          <p className="mb-3 font-semibold text-green-600 dark:text-green-400">
             OUR GALLERY
           </p>
 
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100 sm:text-4xl">
             Moments That Make a Difference
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+          <p className="mx-auto mt-4 max-w-2xl text-gray-600 dark:text-gray-300">
             Explore the moments of kindness, teamwork, and positive
             change created by our community.
           </p>
@@ -63,9 +64,11 @@ const GallerySection = () => {
               key={item.id}
               className="group relative h-64 overflow-hidden rounded-2xl"
             >
-              <img
+              <Image
                 src={item.image}
                 alt={item.title}
+                width={400}
+                height={400}
                 className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
 

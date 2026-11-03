@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -59,24 +60,31 @@ const LoginPage = () => {
     }
   };
 
+  const inputClass =
+    "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-green-600 focus:ring-2 focus:ring-green-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:ring-green-900";
+
+  const labelClass =
+    "mb-2 block font-medium text-gray-700 dark:text-gray-300";
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
+    <main className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 dark:bg-gray-950">
+      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm dark:border-gray-800 dark:bg-gray-900">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">Welcome Back!</h1>
-          <p className="mt-2 text-gray-600">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Welcome Back!
+          </h1>
+
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
             Login to continue your community journey.
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block font-medium text-gray-700"
-            >
+            <label htmlFor="email" className={labelClass}>
               Email Address
             </label>
+
             <input
               id="email"
               type="email"
@@ -84,17 +92,15 @@ const LoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="mb-2 block font-medium text-gray-700"
-            >
+            <label htmlFor="password" className={labelClass}>
               Password
             </label>
+
             <input
               id="password"
               type="password"
@@ -102,12 +108,15 @@ const LoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-green-600 focus:ring-2 focus:ring-green-100"
+              className={inputClass}
             />
           </div>
 
           {error && (
-            <p role="alert" className="text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-600 dark:bg-red-950/40 dark:text-red-400"
+            >
               {error}
             </p>
           )}
@@ -122,9 +131,13 @@ const LoginPage = () => {
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <div className="h-px flex-1 bg-gray-200" />
-          <span className="text-sm text-gray-500">OR CONTINUE WITH</span>
-          <div className="h-px flex-1 bg-gray-200" />
+          <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
+
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            OR CONTINUE WITH
+          </span>
+
+          <div className="h-px flex-1 bg-gray-200 dark:bg-gray-700" />
         </div>
 
         <div className="space-y-3">
@@ -132,7 +145,7 @@ const LoginPage = () => {
             type="button"
             onClick={() => handleSocialLogin("google")}
             disabled={loading || !!socialLoading}
-            className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             <span className="text-lg font-bold">G</span>
             {socialLoading === "google"
@@ -144,7 +157,7 @@ const LoginPage = () => {
             type="button"
             onClick={() => handleSocialLogin("github")}
             disabled={loading || !!socialLoading}
-            className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60"
+            className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 px-4 py-3 font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800"
           >
             <span className="text-lg font-bold">⌘</span>
             {socialLoading === "github"
@@ -153,11 +166,11 @@ const LoginPage = () => {
           </button>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
+        <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-semibold text-green-600 hover:underline"
+            className="font-semibold text-green-600 hover:underline dark:text-green-400"
           >
             Register
           </Link>
