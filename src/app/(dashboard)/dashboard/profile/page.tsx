@@ -1,25 +1,25 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 
-const ProfilePage = () => {
-  const { data: session, isPending } = authClient.useSession();
+interface ProfileFormProps {
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    image?: string | null;
+  };
+}
 
-  const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+const ProfileForm = ({ user }: ProfileFormProps) => {
+  const [name, setName] = useState(user.name || "");
+  const [image, setImage] = useState(user.image || "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-
-  useEffect(() => {
-    if (session?.user) {
-      setName(session.user.name || "");
-      setImage(session.user.image || "");
-    }
-  }, [session]);
 
   const handleUpdateProfile = async (
     e: React.FormEvent<HTMLFormElement>
@@ -61,20 +61,6 @@ const ProfilePage = () => {
   const labelClass =
     "mb-2 block font-medium text-gray-700 dark:text-gray-300";
 
-  if (isPending) {
-    return (
-      <main className="flex min-h-[60vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
-        <p className="text-gray-600 dark:text-gray-400">
-          Loading profile...
-        </p>
-      </main>
-    );
-  }
-
-  if (!session?.user) {
-    return null;
-  }
-
   return (
     <main className="min-h-[70vh] bg-gray-50 px-4 py-12 dark:bg-gray-950">
       <div className="mx-auto max-w-2xl rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 dark:border-gray-800 dark:bg-gray-900">
@@ -103,7 +89,7 @@ const ProfilePage = () => {
             </h2>
 
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              {session.user.email}
+              {user.email}
             </p>
           </div>
         </div>
@@ -132,7 +118,7 @@ const ProfilePage = () => {
             <input
               id="email"
               type="email"
-              value={session.user.email}
+              value={user.email}
               readOnly
               className="w-full cursor-not-allowed rounded-lg border border-gray-200 bg-gray-100 px-4 py-3 text-gray-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
             />
@@ -186,6 +172,26 @@ const ProfilePage = () => {
       </div>
     </main>
   );
+};
+
+const ProfilePage = () => {
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) {
+    return (
+      <main className="flex min-h-[60vh] items-center justify-center bg-gray-50 dark:bg-gray-950">
+        <p className="text-gray-600 dark:text-gray-400">
+          Loading profile...
+        </p>
+      </main>
+    );
+  }
+
+  if (!session?.user) {
+    return null;
+  }
+
+  return <ProfileForm key={session.user.id} user={session.user} />;
 };
 
 export default ProfilePage;
