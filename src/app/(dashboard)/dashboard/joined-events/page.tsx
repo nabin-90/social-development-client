@@ -26,7 +26,7 @@ const JoinedEventsPage = () => {
     const fetchJoinedEvents = async () => {
       try {
         const tokenResponse = await fetch(
-          "http://localhost:5000/api/auth/token",
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
           {
             method: "GET",
             credentials: "include",
@@ -39,7 +39,7 @@ const JoinedEventsPage = () => {
           throw new Error("Please login to see your joined events.");
         }
 
-        const response = await fetch("http://localhost:5000/joined-events", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/joined-events`, {
           headers: {
             Authorization: `Bearer ${tokenResult.token}`,
           },

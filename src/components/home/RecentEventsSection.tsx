@@ -23,7 +23,7 @@ const RecentEventsSection = () => {
   useEffect(() => {
     const fetchRecentEvents = async () => {
       try {
-        const response = await fetch("http://localhost:5000/events?limit=6");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events?limit=6`);
 
         if (!response.ok) {
           throw new Error("Failed to fetch events.");

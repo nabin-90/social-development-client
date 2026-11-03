@@ -43,7 +43,7 @@ const CreateEventPage = () => {
     try {
       // Get JWT token from Better Auth
       const tokenResponse = await fetch(
-        "http://localhost:5000/api/auth/token",
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
         {
           method: "GET",
           credentials: "include",
@@ -57,7 +57,7 @@ const CreateEventPage = () => {
       }
 
       // Send event data to Express backend
-      const response = await fetch("http://localhost:5000/events", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

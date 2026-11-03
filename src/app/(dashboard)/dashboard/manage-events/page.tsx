@@ -21,7 +21,7 @@ const ManageEventsPage = () => {
     const fetchMyEvents = async () => {
       try {
         const tokenResponse = await fetch(
-          "http://localhost:5000/api/auth/token",
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
           {
             method: "GET",
             credentials: "include",
@@ -34,7 +34,7 @@ const ManageEventsPage = () => {
           throw new Error("Please login to manage your events.");
         }
 
-        const response = await fetch("http://localhost:5000/my-events", {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/my-events`, {
           headers: {
             Authorization: `Bearer ${tokenResult.token}`,
           },
@@ -66,7 +66,7 @@ const ManageEventsPage = () => {
 
     try {
       const tokenResponse = await fetch(
-        "http://localhost:5000/api/auth/token",
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
         {
           method: "GET",
           credentials: "include",
@@ -80,7 +80,7 @@ const ManageEventsPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/events/${deleteTarget._id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${deleteTarget._id}`,
         {
           method: "DELETE",
           headers: {

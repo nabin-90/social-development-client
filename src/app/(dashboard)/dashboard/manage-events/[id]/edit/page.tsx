@@ -38,7 +38,7 @@ const EditEventPage = () => {
     const fetchEvent = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/events/${eventId}`
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`
         );
 
         const result = await response.json();
@@ -87,7 +87,7 @@ const EditEventPage = () => {
 
     try {
       const tokenResponse = await fetch(
-        "http://localhost:5000/api/auth/token",
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
         {
           method: "GET",
           credentials: "include",
@@ -101,7 +101,7 @@ const EditEventPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/events/${eventId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`,
         {
           method: "PUT",
           headers: {

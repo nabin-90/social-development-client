@@ -34,7 +34,7 @@ const EventDetailsPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/events/${eventId}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`);
 
         if (!response.ok) {
           throw new Error("Failed to load event details.");
@@ -66,7 +66,7 @@ const EventDetailsPage = () => {
 
     try {
       const tokenResponse = await fetch(
-        "http://localhost:5000/api/auth/token",
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
         {
           method: "GET",
           credentials: "include",
@@ -81,7 +81,7 @@ const EventDetailsPage = () => {
       }
 
       const response = await fetch(
-        `http://localhost:5000/events/${eventId}/join`,
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}/join`,
         {
           method: "POST",
           headers: {
