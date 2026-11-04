@@ -25,13 +25,10 @@ const JoinedEventsPage = () => {
   useEffect(() => {
     const fetchJoinedEvents = async () => {
       try {
-        const tokenResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
+        const tokenResponse = await fetch("/api/auth/token", {
+          method: "GET",
+          credentials: "include",
+        });
 
         const tokenResult = await tokenResponse.json();
 
@@ -39,11 +36,14 @@ const JoinedEventsPage = () => {
           throw new Error("Please login to see your joined events.");
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/joined-events`, {
-          headers: {
-            Authorization: `Bearer ${tokenResult.token}`,
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/joined-events`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResult.token}`,
+            },
           },
-        });
+        );
 
         const result = await response.json();
 
