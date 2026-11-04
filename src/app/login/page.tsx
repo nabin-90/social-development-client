@@ -47,7 +47,7 @@ const LoginPage = () => {
     try {
       const { error } = await authClient.signIn.social({
         provider,
-        callbackURL: "http://localhost:3000/",
+        callbackURL: "/",
       });
 
       if (error) {
