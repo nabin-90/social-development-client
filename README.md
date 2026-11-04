@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SocialDev – Social Development Events Platform
 
-## Getting Started
+SocialDev is a full-stack event management platform where users can discover upcoming social development events, create and manage their own events, and join events organized by others.
 
-First, run the development server:
+## 🌐 Live Demo
+
+[Visit SocialDev](https://social-development-client.vercel.app/)
+
+## 📂 Repositories
+
+- **Frontend:** [SocialDev Client](https://github.com/nabin-90/social-development-client)
+- **Backend:** [SocialDev Server](https://github.com/nabin-90/social-development-server)
+
+## ✨ Features
+
+- User registration and login with Better Auth.
+- Browse upcoming social development events.
+- View detailed information about each event.
+- Create new events.
+- Edit and delete events created by the logged-in user.
+- Join events created by other users.
+- Prevent duplicate event joining.
+- View events joined by the logged-in user.
+- Protected dashboard routes and authenticated API requests.
+- Responsive user interface.
+
+## 🛠️ Technologies Used
+
+**Frontend**
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Better Auth
+
+**Backend**
+- Node.js
+- Express.js
+- MongoDB
+- Better Auth JWT
+- CORS
+
+**Deployment**
+- Vercel
+
+## ⚙️ Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/nabin-90/social-development-client.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
+cd social-development-client
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure environment variables
+
+Create a `.env.local` file in the project root and add the required environment variables:
+
+```env
+NEXT_PUBLIC_SERVER_BASE_URL=YOUR_BACKEND_URL
+```
+
+Use your actual backend URL and configure the remaining authentication-related variables according to your project setup.
+
+### 5. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Deployment
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The frontend is deployed on Vercel.
 
-## Learn More
+**Live URL:** https://social-development-client.vercel.app/
 
-To learn more about Next.js, take a look at the following resources:
+## 👨‍💻 Developer
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Mahmudun Nabin**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- GitHub: [nabin-90](https://github.com/nabin-90)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ using Next.js and Tailwind CSS.
