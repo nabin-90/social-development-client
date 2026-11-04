@@ -38,7 +38,7 @@ const EditEventPage = () => {
     const fetchEvent = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`,
         );
 
         const result = await response.json();
@@ -49,9 +49,7 @@ const EditEventPage = () => {
 
         setEvent(result.data);
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Something went wrong."
-        );
+        setError(err instanceof Error ? err.message : "Something went wrong.");
       } finally {
         setLoading(false);
       }
@@ -62,9 +60,7 @@ const EditEventPage = () => {
     }
   }, [eventId]);
 
-  const handleUpdateEvent = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleUpdateEvent = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formElement = e.currentTarget;
@@ -86,13 +82,10 @@ const EditEventPage = () => {
     setUpdating(true);
 
     try {
-      const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const tokenResponse = await fetch("/api/auth/token", {
+        method: "GET",
+        credentials: "include",
+      });
 
       const tokenResult = await tokenResponse.json();
 
@@ -109,7 +102,7 @@ const EditEventPage = () => {
             Authorization: `Bearer ${tokenResult.token}`,
           },
           body: JSON.stringify(eventData),
-        }
+        },
       );
 
       const result = await response.json();
@@ -125,9 +118,7 @@ const EditEventPage = () => {
         router.refresh();
       }, 1500);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Something went wrong."
-      );
+      setError(err instanceof Error ? err.message : "Something went wrong.");
     } finally {
       setUpdating(false);
     }
@@ -158,9 +149,7 @@ const EditEventPage = () => {
       <div className="mx-auto max-w-3xl">
         <p className="font-semibold text-green-600">UPDATE EVENT</p>
 
-        <h1 className="mt-2 text-3xl font-bold text-gray-900">
-          Edit Event
-        </h1>
+        <h1 className="mt-2 text-3xl font-bold text-gray-900">Edit Event</h1>
 
         <p className="mt-3 text-gray-600">
           Update the details of your community event.
@@ -289,13 +278,19 @@ const EditEventPage = () => {
           </div>
 
           {error && (
-            <p role="alert" className="rounded-lg bg-red-50 p-3 text-sm text-red-600">
+            <p
+              role="alert"
+              className="rounded-lg bg-red-50 p-3 text-sm text-red-600"
+            >
               {error}
             </p>
           )}
 
           {success && (
-            <p role="status" className="rounded-lg bg-green-50 p-3 text-sm text-green-700">
+            <p
+              role="status"
+              className="rounded-lg bg-green-50 p-3 text-sm text-green-700"
+            >
               {success}
             </p>
           )}
