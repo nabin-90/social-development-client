@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -34,7 +33,9 @@ const EventDetailsPage = () => {
   useEffect(() => {
     const fetchEvent = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`);
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events/${eventId}`,
+        );
 
         if (!response.ok) {
           throw new Error("Failed to load event details.");
@@ -65,13 +66,10 @@ const EventDetailsPage = () => {
     setJoinSuccess("");
 
     try {
-      const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-        {
-          method: "GET",
-          credentials: "include",
-        },
-      );
+      const tokenResponse = await fetch("/api/auth/token", {
+        method: "GET",
+        credentials: "include",
+      });
 
       const tokenResult = await tokenResponse.json();
 
