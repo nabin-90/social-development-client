@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -42,13 +41,10 @@ const CreateEventPage = () => {
 
     try {
       // Get JWT token from Better Auth
-      const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-        {
-          method: "GET",
-          credentials: "include",
-        },
-      );
+      const tokenResponse = await fetch("/api/auth/token", {
+        method: "GET",
+        credentials: "include",
+      });
 
       const tokenResult = await tokenResponse.json();
 
@@ -57,14 +53,17 @@ const CreateEventPage = () => {
       }
 
       // Send event data to Express backend
-      const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${tokenResult.token}`,
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/events`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${tokenResult.token}`,
+          },
+          body: JSON.stringify(eventData),
         },
-        body: JSON.stringify(eventData),
-      });
+      );
 
       const result = await response.json();
 
@@ -87,8 +86,7 @@ const CreateEventPage = () => {
     }
   };
 
-  const labelClass =
-    "mb-2 block font-medium text-gray-700 dark:text-gray-300";
+  const labelClass = "mb-2 block font-medium text-gray-700 dark:text-gray-300";
 
   const inputClass =
     "w-full rounded-lg border border-gray-300 bg-white px-4 py-3 text-gray-900 placeholder:text-gray-400 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 dark:focus:border-green-500 dark:focus:ring-green-900";
