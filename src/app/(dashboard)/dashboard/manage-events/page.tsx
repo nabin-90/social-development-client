@@ -20,13 +20,10 @@ const ManageEventsPage = () => {
   useEffect(() => {
     const fetchMyEvents = async () => {
       try {
-        const tokenResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
+        const tokenResponse = await fetch("/api/auth/token", {
+          method: "GET",
+          credentials: "include",
+        });
 
         const tokenResult = await tokenResponse.json();
 
@@ -34,11 +31,14 @@ const ManageEventsPage = () => {
           throw new Error("Please login to manage your events.");
         }
 
-        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/my-events`, {
-          headers: {
-            Authorization: `Bearer ${tokenResult.token}`,
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/my-events`,
+          {
+            headers: {
+              Authorization: `Bearer ${tokenResult.token}`,
+            },
           },
-        });
+        );
 
         const result = await response.json();
 
@@ -65,13 +65,10 @@ const ManageEventsPage = () => {
     setSuccess("");
 
     try {
-      const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_BASE_URL}/api/auth/token`,
-        {
-          method: "GET",
-          credentials: "include",
-        },
-      );
+      const tokenResponse = await fetch("/api/auth/token", {
+        method: "GET",
+        credentials: "include",
+      });
 
       const tokenResult = await tokenResponse.json();
 
