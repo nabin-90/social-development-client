@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 export interface EventCardData {
@@ -57,32 +56,38 @@ const EventCard = ({ event, updateHref, onDelete }: EventCardProps) => {
           <p>📍 {event.location}</p>
         </div>
 
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <Link
-            href={`/events/${event._id}`}
-            className="font-semibold text-green-700 transition hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
-          >
-            View Details →
-          </Link>
-
-          {updateHref && (
+        <div className="mt-6 space-y-3">
+          
+          <div>
             <Link
-              href={updateHref}
-              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700"
+              href={`/events/${event._id}`}
+              className="font-semibold text-green-500 transition hover:text-green-400"
             >
-              Update Event
+              View Details →
             </Link>
-          )}
+          </div>
 
-          {onDelete && (
-            <button
-              type="button"
-              onClick={() => onDelete(event)}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-red-700"
-            >
-              Delete Event
-            </button>
-          )}
+          
+          <div className="flex flex-wrap items-center gap-3">
+            {updateHref && (
+              <Link
+                href={updateHref}
+                className="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
+              >
+                Update Event
+              </Link>
+            )}
+
+            {onDelete && (
+              <button
+                type="button"
+                onClick={() => onDelete(event)}
+                className="rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+              >
+                Delete Event
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </article>
