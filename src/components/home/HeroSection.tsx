@@ -40,38 +40,14 @@ const HeroSection = () => {
           </p>
         </div>
 
-        {/* Right Visual Card */}
-        <div className="relative flex justify-center">
-          <div className="w-full max-w-md rounded-3xl border border-green-100 bg-white p-6 shadow-xl dark:border-green-900 dark:bg-gray-900 sm:p-8">
-            <div className="flex items-center justify-between">
-              <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/50 dark:text-green-300">
-                Community Event
-              </span>
-              <span className="text-2xl">🌱</span>
-            </div>
-
-            <div className="mt-8 flex h-48 items-center justify-center rounded-2xl bg-gradient-to-br from-green-100 to-emerald-200 dark:from-green-900 dark:to-emerald-800">
-              <span className="text-7xl">🌳</span>
-            </div>
-
-            <h2 className="mt-6 text-xl font-bold text-gray-900 dark:text-gray-100">
-              Plant Trees, Grow Hope
-            </h2>
-
-            <p className="mt-2 text-sm leading-6 text-gray-600 dark:text-gray-300">
-              Join your community to create a greener and healthier
-              environment for everyone.
-            </p>
-
-            <div className="mt-6 flex items-center justify-between border-t pt-4">
-              <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-                Make an Impact
-              </span>
-              <span className="font-semibold text-green-700 dark:text-green-400">
-                Join Us →
-              </span>
-            </div>
-          </div>
+        {/* Right Side Tree Emoji */}
+        <div className="flex items-center justify-center">
+          <span
+            aria-hidden="true"
+            className="text-[160px] leading-none drop-shadow-2xl transition duration-500 hover:scale-110 sm:text-[200px] lg:text-[240px]"
+          >
+            🌳
+          </span>
         </div>
       </div>
     </section>
