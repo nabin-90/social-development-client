@@ -5,7 +5,6 @@ const HeroSection = () => {
   return (
     <section className="bg-gradient-to-br from-green-50 via-white to-emerald-50 dark:from-gray-950 dark:via-gray-900 dark:to-emerald-950">
       <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-12 sm:py-16 md:grid-cols-2 md:gap-12 md:py-28">
-
         {/* Left Content */}
         <div>
           <span className="mb-5 inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900/50 dark:text-green-300">
@@ -25,20 +24,14 @@ const HeroSection = () => {
             society together.
           </p>
 
-          {/* CTA Buttons */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          {/* CTA Button */}
+          <div className="mt-8">
             <Link
               href="/upcoming-events"
-              className="rounded-lg bg-green-700 px-6 py-3 font-semibold text-white transition hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-500"
+              className="inline-flex items-center gap-2 rounded-lg bg-green-700 px-6 py-3 font-semibold text-white transition hover:bg-green-800 dark:bg-green-600 dark:hover:bg-green-500"
             >
               Explore Events
-            </Link>
-
-            <Link
-              href="/login"
-              className="rounded-lg border border-green-700 px-6 py-3 font-semibold text-green-700 transition hover:bg-green-50 dark:border-green-400 dark:text-green-400 dark:hover:bg-green-900/30"
-            >
-              Get Started
+              <span aria-hidden="true">→</span>
             </Link>
           </div>
 
@@ -50,7 +43,6 @@ const HeroSection = () => {
         {/* Right Visual Card */}
         <div className="relative flex justify-center">
           <div className="w-full max-w-md rounded-3xl border border-green-100 bg-white p-6 shadow-xl dark:border-green-900 dark:bg-gray-900 sm:p-8">
-
             <div className="flex items-center justify-between">
               <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700 dark:bg-green-900/50 dark:text-green-300">
                 Community Event
@@ -81,7 +73,6 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
-
       </div>
     </section>
   );
