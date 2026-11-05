@@ -27,12 +27,12 @@ const features = [
     linkText: "Join an Event",
   },
   {
-    icon: "📊",
-    title: "Track Activities",
+    icon: "🌱",
+    title: "Community Impact",
     description:
-      "Keep track of the events you have joined and manage the events you have created.",
-    link: "/dashboard",
-    linkText: "Manage Activities",
+      "Make a difference through community service, environmental initiatives, and meaningful social activities.",
+    link: "/upcoming-events",
+    linkText: "Make an Impact",
   },
 ];
 
@@ -40,7 +40,6 @@ const FeaturesSection = () => {
   return (
     <section className="bg-white px-4 py-14 dark:bg-gray-950 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl">
-
         {/* Section Heading */}
         <div className="mx-auto mb-14 max-w-2xl text-center">
           <span className="inline-block rounded-full bg-green-100 px-4 py-2 text-sm font-semibold text-green-700 dark:bg-green-900/50 dark:text-green-300">
@@ -89,7 +88,6 @@ const FeaturesSection = () => {
             </div>
           ))}
         </div>
-
       </div>
     </section>
   );
