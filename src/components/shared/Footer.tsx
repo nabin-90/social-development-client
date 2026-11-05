@@ -17,8 +17,8 @@ const Footer = () => {
       ]
     : [
         { label: "Upcoming Events", href: "/upcoming-events" },
-        { label: "Sign In", href: "/login" },
-        { label: "Sign Up", href: "/register" },
+        { label: "Login", href: "/login" },
+        { label: "Register", href: "/register" },
       ];
 
   return (
