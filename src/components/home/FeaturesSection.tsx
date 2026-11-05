@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 
 const features = [
@@ -24,7 +23,7 @@ const features = [
     description:
       "Connect with like-minded people and participate in activities that help build a better society.",
     link: "/upcoming-events",
-    linkText: "Join an Event",
+    linkText: "View Events & Join",
   },
 ];
 
@@ -41,7 +40,8 @@ const FeaturesSection = () => {
           <h2 className="mt-5 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
             Everything You Need to
             <span className="text-green-700 dark:text-green-400">
-              {" "}Make an Impact
+              {" "}
+              Make an Impact
             </span>
           </h2>
 
