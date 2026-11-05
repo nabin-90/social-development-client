@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -26,11 +25,17 @@ const Footer = () => {
     <footer className="border-t border-gray-200 bg-white text-gray-600 dark:border-gray-800 dark:bg-gray-950 dark:text-gray-400">
       <div className="mx-auto max-w-7xl px-6 py-14 lg:px-8">
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-[1.4fr_1.2fr_1fr] lg:gap-16">
-
           {/* Brand */}
           <div>
             <Link
               href="/"
+              scroll={true}
+              onClick={() => {
+                window.scrollTo({
+                  top: 0,
+                  behavior: "smooth",
+                });
+              }}
               className="inline-block text-2xl font-bold tracking-tight text-green-700 transition hover:text-green-600 dark:text-green-400 dark:hover:text-green-300"
             >
               SocialDev
@@ -63,6 +68,13 @@ const Footer = () => {
                   <li key={link.href}>
                     <Link
                       href={link.href}
+                      scroll={true}
+                      onClick={() => {
+                        window.scrollTo({
+                          top: 0,
+                          behavior: "smooth",
+                        });
+                      }}
                       className="transition-colors duration-200 hover:text-green-700 dark:hover:text-green-400"
                     >
                       {link.label}
@@ -113,9 +125,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-gray-200 pt-6 text-center text-sm dark:border-gray-800 sm:flex-row">
-          <p>
-            © {new Date().getFullYear()} SocialDev. All rights reserved.
-          </p>
+          <p>© {new Date().getFullYear()} SocialDev. All rights reserved.</p>
 
           <p>
             Built with{" "}
