@@ -26,14 +26,6 @@ const features = [
     link: "/upcoming-events",
     linkText: "Join an Event",
   },
-  {
-    icon: "🌱",
-    title: "Community Impact",
-    description:
-      "Make a difference through community service, environmental initiatives, and meaningful social activities.",
-    link: "/upcoming-events",
-    linkText: "Make an Impact",
-  },
 ];
 
 const FeaturesSection = () => {
@@ -60,7 +52,7 @@ const FeaturesSection = () => {
         </div>
 
         {/* Feature Cards */}
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
